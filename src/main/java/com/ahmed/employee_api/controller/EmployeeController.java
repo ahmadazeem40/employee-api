@@ -4,6 +4,7 @@ import com.ahmed.employee_api.model.Employee;
 import com.ahmed.employee_api.model.EmployeeFilter;
 import com.ahmed.employee_api.repository.EmployeeGender;
 import com.ahmed.employee_api.service.EmployeeService;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,6 +21,7 @@ public class EmployeeController {
 
     @GetMapping("/gender")
     public List<Employee> getEmployeeByGender(@RequestBody EmployeeFilter filter){
-        return employeeService.findEmployeesByGender(filter.getGender());
+        Page<Employee> employeePage = employeeService.findEmployeesByGender(filter.getGender(), filter.getPage(), filter.getSize());
+        return employeePage.getContent();
     }
 }
