@@ -1,9 +1,9 @@
 package com.ahmed.employee_api.model;
 
-import com.ahmed.employee_api.repository.EmployeeGender;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(schema = "employees", name = "employee")
@@ -21,7 +21,13 @@ public class Employee {
     @Column(name = "gender")
     private EmployeeGender gender;
 
-    private LocalDate hire_date;
+    @OneToMany
+    @JoinColumn(name = "id")
+    private List<Title> title;
+
+    @OneToMany
+    @JoinColumn(name = "id")
+    private List<Salary> salary;
 
     public long getId() {
         return id;
@@ -63,11 +69,4 @@ public class Employee {
         this.gender = gender;
     }
 
-    public LocalDate getHire_date() {
-        return hire_date;
-    }
-
-    public void setHire_date(LocalDate hire_date) {
-        this.hire_date = hire_date;
-    }
 }
